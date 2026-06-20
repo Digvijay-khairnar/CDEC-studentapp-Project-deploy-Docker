@@ -1,0 +1,19 @@
+# frotend docker file 
+FROM ubuntu:latest
+
+RUN apt update  \
+    && apt install nodejs npm nginx -y
+
+WORKDIR /app
+
+COPY .  .
+
+RUN npm install
+
+RUN npm run build
+
+RUN cp -rf dist/* /var/www/html/
+
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]
